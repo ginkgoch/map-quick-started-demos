@@ -9,7 +9,7 @@ NativeFactory.registerFrom(canvasImp);
 
 async function main() {
     // Create a feature source instance
-    let source = new ShapefileFeatureSource(`../data/cntry02-900913.shp`);
+    let source = new ShapefileFeatureSource(`../../data/cntry02-900913.shp`);
     
     // Create a feature layer instance
     let layer = new FeatureLayer(source);
