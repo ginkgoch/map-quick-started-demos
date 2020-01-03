@@ -25,12 +25,23 @@ Each js file is a standalone demo. Execute it with `node [replace with js file n
 
 #### Render a simple map
 
-[render-simple-map.js](quick-started/render-simple-map.js) represents how to load a shapefile and render into an image.
+[render-simple-map.js](core/quick-started/render-simple-map.js) represents how to load a shapefile and render into an image.
 
 ![render-simple-map](core/quick-started/render-simple-map.png)
 
 #### Render a colorful map
 
-[render-colorful-map.js](quick-started/render-colorful-map.js) represents how to load a shapefile, then extract its property table and find out the distinct field values. When we got the distinct values, it automatically generate a `ValueStyle` to set an exclusive `FillStyle` for each values. 
+[render-colorful-map.js](core/quick-started/render-colorful-map.js) represents how to load a shapefile, then extract its property table and find out the distinct field values. When we got the distinct values, it automatically generate a `ValueStyle` to set an exclusive `FillStyle` for each values. 
 
 ![render-colorful-map](core/quick-started/render-colorful-map.png)
+
+### Use Geometries
+
+#### Create geometry and render with different styles
+
+[create-geoms.js](core/geometries/create-geom.js) represents how to create point, polygon and line geometries; then set a specific style base on various geometry type and render them into an image.
+
+![create-geoms](core/geometries/create-geoms.png)
+
+
+
