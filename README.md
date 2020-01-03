@@ -35,6 +35,10 @@ Each js file is a standalone demo. Execute it with `node [replace with js file n
 
 ![render-colorful-map](core/quick-started/render-colorful-map.png)
 
+### Tutorial Begins
+
+From this section, I will introduce the very basic demos through geometry, spatial analyze, style renderer, source and layers. I try to use pretty simple demo for example with brief code to show you how to implement a small part in a GIS app. When you understand the very little functions, you could build up a complex and robust GIS app by putting them together.
+
 ### Use Geometries
 
 #### Create geometry and render with different styles
