@@ -18,7 +18,7 @@ async function main() {
     let style = ValueStyle.auto('fill', 'CODE', distinctValues, '#fee8c8', '#e34a33', 'black', 1);
     layer.styles.push(style);
 
-    await utils.drawLayers({ srs: 'WGS84', w: 256, h: 256, layers: [layer], out: __filename });
+    await utils.drawLayers({ srs: 'WGS84', layers: [layer], out: __filename });
 }
 
 main();

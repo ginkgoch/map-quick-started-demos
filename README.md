@@ -67,5 +67,31 @@ Actually, we already represents many basic styles within the previous demos. Suc
 
 Imagine a feature source that has some specific value I am interesting, while the others are not; within the interesting values, I also want to render different colors based on the values. `ValueStyle` will be the one to satisfy this scenario.
 
+Here represents two various scenaros for using this style.
+
+In folder `data/Africa`, we include an Africa shapefile. Here attaches the `top 3` records to show you how the field values structure.
+
+| ID   | CODE | COUNTRY |
+| ---- | ---- | ------- |
+| 1    | ALG  | Algeria |
+| 2    | ANG  | Angola  |
+| 3    | ANG  | Angola  |
+
+##### Render areas based on values
+
+[use-value-style.js](core/styles/use-value-style.js) represents how to set an exclusive fill colors based on field `CODE`.
+
+![use-value-style](core/styles/use-value-style.png)
+
+##### Filter and render areas based on some specific values
+
+[render-filter-values.js](core/styles/render-filter-values.js) represents how to filter and render areas with field values `MAL`,  `ZAI` and `SUD` only.
+
+![render-filter-values](core/styles/render-filter-values.png)
+
+
+
+
+
 
 

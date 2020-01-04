@@ -22,7 +22,7 @@ async function main() {
     layerRef.styles.push(style);
 
     try {
-        await utils.drawLayers({ srs: 'WGS84', w: 256, h: 256, layers: [layerRef], out: __filename });
+        await utils.drawLayers({ srs: 'WGS84', layers: [layerRef], out: __filename });
     } catch (ex) {
         console.log(ex);
     }
