@@ -3,6 +3,8 @@
         "EPSG",
         "Shapefile",
         "cntry",
-        "ginkgoch"
+        "ginkgoch",
+        "maxx",
+        "miny"
     ]
 }

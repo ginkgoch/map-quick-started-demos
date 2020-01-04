@@ -18,11 +18,13 @@ async function main() {
     await source.push(new Feature(point));
 
     let layer = new FeatureLayer(source);
-    layer.styles.push(new FillStyle('#9ecae1', '#3182bd', 4));
+    layer.styles.push(new FillStyle('#9ecae1', '#3182bd', 8));
     layer.styles.push(new LineStyle('#31a354', 10));
-    layer.styles.push(new PointStyle('#fee8c8', '#e34a33', 4));
+    layer.styles.push(new PointStyle('#fee8c8', '#e34a33', 8, 20));
 
-    await utils.drawLayers({ srs: 'WGS84', w: 256, h: 256, layers: [layer], out: __filename });
+    await layer.open();
+    let envelope = await layer.envelope();
+    await utils.drawLayers({ srs: 'WGS84', w: 256, h: 256, layers: [layer], out: __filename, envelope, envelopeMargin: 4 });
 }
 
 function _arrToCoordinate(arr) {
