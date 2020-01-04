@@ -181,10 +181,10 @@ ginkgoch-geom@^1.7.8:
     jsts "^2.0.6"
     lodash "^4.17.15"
 
-ginkgoch-map@^1.6.0-alpha4:
-  version "1.6.0-alpha4"
-  resolved "https://registry.yarnpkg.com/ginkgoch-map/-/ginkgoch-map-1.6.0-alpha4.tgz#f5c5b3db435bbe96a823f0b77d2327efef382884"
-  integrity sha512-wuVUHQ1vXf+2EsqWBGHTUD7fu4YASN9B9e9Yivf3fQZs+8hpZZjzkAUHZMaLJHKvHczHY2bONIrAzwvozuHszg==
+ginkgoch-map@^1.6.0-alpha5:
+  version "1.6.0-alpha5"
+  resolved "https://registry.yarnpkg.com/ginkgoch-map/-/ginkgoch-map-1.6.0-alpha5.tgz#9fc45cb75079efdca4bddd0458fcbea9957ade29"
+  integrity sha512-M7gAy2wE60BJbpmu+mKTHZxm8PNeFghqIJtmIfic7W3Kz5QsmUUK0OGTqG7AA2RoWFZ7W7ijfd98AU06oGM9tg==
   dependencies:
     "@types/lodash" "^4.14.136"
     "@types/proj4" "^2.5.0"

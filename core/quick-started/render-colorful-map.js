@@ -8,8 +8,10 @@ const colorMapField = 'COLOR_MAP';
 NativeFactory.registerFrom(canvasImp);
 
 async function main() {
+    let sourcePath = path.resolve(__dirname, `../../data/cntry02-900913.shp`);
+
     // Create a feature source instance
-    let source = new ShapefileFeatureSource(`../../data/cntry02-900913.shp`);
+    let source = new ShapefileFeatureSource(sourcePath);
     
     // Create a feature layer instance
     let layer = new FeatureLayer(source);
