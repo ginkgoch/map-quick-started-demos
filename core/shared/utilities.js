@@ -6,12 +6,12 @@ const { MapEngine, NativeFactory, Srs } = require('ginkgoch-map').default.all;
 
 module.exports = {
     /**
-     * @param options Defaults to `{ w: 512, h: 512, srs: 'EPSG:900913', layers:[], envelope: undefined, out: 'unknown.png' }`.
+     * @param options Defaults to `{ w: 512, h: 512, srs: 'EPSG:900913', layers:[], envelope: undefined, out: 'unknown.js', envelopeMargin: 0, outSuffix: '' }`.
      */
     async drawLayers(options) {
         NativeFactory.registerFrom(canvasImp);
 
-        options = _.defaults(options, { w: 512, h: 512, srs: 'EPSG:900913', layers:[], envelope: undefined, out: 'unknown.js', envelopeMargin: 0 });
+        options = _.defaults(options, { w: 512, h: 512, srs: 'EPSG:900913', layers:[], envelope: undefined, out: 'unknown.js', envelopeMargin: 0, outSuffix: '' });
 
         let mapEngine = new MapEngine(options.w, options.h);
 
@@ -33,7 +33,25 @@ module.exports = {
         // Gets buffer from image
         let imageBuffer = image.toBuffer();
 
-        // Store image buffer on disk
-        fs.writeFileSync(`${options.out.replace(/\.js/gi, '')}.png`, imageBuffer);
+        if (options.out) {
+            // Store image buffer on disk
+            fs.writeFileSync(`${options.out.replace(/\.js/gi, options.outSuffix)}.png`, imageBuffer);
+        }
+    },
+
+    generateStar(vertexCount = 5, centerX = 0, centerY = 0, radius1 = 40, radius2 = 15) {
+        let start = Math.PI / 2.0;
+        let increment = Math.PI / vertexCount;
+        let coordinates = [];
+        
+        for (let i = 0; i < vertexCount * 2 + 1; i++) {
+            let angle = start + i * increment;
+            let r = i % 2 === 0 ? radius1 : radius2;
+            let x = r * Math.cos(angle) + centerX;
+            let y = r * Math.sin(angle) + centerY;
+            coordinates.push({ x, y });
+        }
+    
+        return coordinates;
     }
 };

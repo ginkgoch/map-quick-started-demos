@@ -47,5 +47,25 @@ From this section, I will introduce the very basic demos through geometry, spati
 
 ![create-geoms](core/geometries/create-geoms.png)
 
+#### Buffer geometry by distance
+
+[spatial-buffer.js](core/geometries/spatial-buffer.js) represents how to buffer a geometry with a specific distance. See the following images for difference.
+
+* Buffers with `4` degrees
+    ![spatial-buffer](core/geometries/spatial-buffer.png)
+* Buffers with `20` degrees
+    ![spatial-buffer](core/geometries/spatial-buffer-1.png)
+
+#### Other spatial operations
+We provides other [built-in spatial operations](https://ginkgoch.com/node-geom/classes/spatialops.html), the other demos are in WIP...
+
+### Use Styles
+
+Actually, we already represents many basic styles within the previous demos. Such as `FillStyle`, `LineStyle` or `PointStyle`. So I will skip those styles and show you some other interesting styles.
+
+#### Use value based style
+
+Imagine a feature source that has some specific value I am interesting, while the others are not; within the interesting values, I also want to render different colors based on the values. `ValueStyle` will be the one to satisfy this scenario.
+
 
 
