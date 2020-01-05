@@ -89,6 +89,14 @@ In folder `data/Africa`, we include an Africa shapefile. Here attaches the `top 
 
 ![render-filter-values](core/styles/render-filter-values.png)
 
+### Use Text Style
+
+Labels are pretty importent for styling. We also support it. Check out [use-text-style.js](core/styles/use-text-style) for how to use `TextStyle` to put text on the map. This style automatically ignore the overlapping labels. If some label for small area not drawn, try to zoom deeper and you could see it when there is enough space for this label and no overlapping labels around it.
+
+![use-text-style](core/styles/use-text-style.png)
+
+
+
 
 
 
