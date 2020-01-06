@@ -1,6 +1,23 @@
 # Quick Started Demos for Map Core
 
-This represents several simple demos for pure core library. It doesn't introduce any framework to building web, desktop or mobile. Just few lines of code to show the power of its loading, query functions.
+- [Prerequisite](#prerequisite)
+- [Demos](#demos)
+    - [Quick Started](#quick-started)
+        - [Render a simple map](#render-a-simple-map)
+        - [Render a colorful map](#render-a-colorful-map)
+    - [Tutorial Begins](#tutorial-begins)
+    - [Use Geometries](#use-geometries)
+        - [Create geometry and render with different styles](#create-geometry-and-render-with-different-styles)
+        - [Buffer geometry by distance](#buffer-geometry-by-distance)
+        - [Other spatial operations](#other-spatial-operations)
+    - [Use Styles](#use-styles)
+        - [Use simple styles](#use-simple-styles)
+        - [Use value based style](#use-value-based-style)
+            - [Render areas based on values](#render-areas-based-on-values)
+            - [Filter and render areas based on some specific values](#filter-and-render-areas-based-on-some-specific-values)
+        - [Use Text Style](#use-text-style)
+
+This page represents several simple demos for [pure map core library](https://github.com/ginkgoch/node-map). In this page, I don't refer any other web, desktop or mobile frameworks to build rich UX application; but use few lines of code to show the power of its GIS functions.
 
 ## Prerequisite
 
@@ -61,7 +78,11 @@ We provides other [built-in spatial operations](https://ginkgoch.com/node-geom/c
 
 ### Use Styles
 
+#### Use simple styles
+
 Actually, we already represents many basic styles within the previous demos. Such as `FillStyle`, `LineStyle` or `PointStyle`. So I will skip those styles and show you some other interesting styles.
+
+* [create-geoms.js](core/geometries/create-geom.js)
 
 #### Use value based style
 
@@ -77,6 +98,14 @@ In folder `data/Africa`, we include an Africa shapefile. Here attaches the `top 
 | 2    | ANG  | Angola  |
 | 3    | ANG  | Angola  |
 
+> I have a cross platform (can run in macOS, Linux and Win so far) GUI application [Ginkgoch Shapefile Viewer](https://github.com/ginkgoch/node-shapefile-viewer/releases) that allows to load shapefile, and render on top of a shapefile. Then you can visually tell what the shapefile looks like and the table data it includes.
+>
+> ![Shapefile Viewer](https://github.com/ginkgoch/node-shapefile-viewer/raw/develop/screenshots/overview.png)
+>
+> If GUI is too heavy to you, here is also a [command line tool](https://github.com/ginkgoch/node-shapefile-cli) you could look into.
+
+
+
 ##### Render areas based on values
 
 [use-value-style.js](core/styles/use-value-style.js) represents how to set an exclusive fill colors based on field `CODE`.
@@ -89,11 +118,26 @@ In folder `data/Africa`, we include an Africa shapefile. Here attaches the `top 
 
 ![render-filter-values](core/styles/render-filter-values.png)
 
-### Use Text Style
+#### Use Text Style
 
 Labels are pretty importent for styling. We also support it. Check out [use-text-style.js](core/styles/use-text-style) for how to use `TextStyle` to put text on the map. This style automatically ignore the overlapping labels. If some label for small area not drawn, try to zoom deeper and you could see it when there is enough space for this label and no overlapping labels around it.
 
 ![use-text-style](core/styles/use-text-style.png)
+
+### Layers and Sources
+
+As the samples represented previously, in the mean time, the `FeatureSource` and `FeatureLayer` are also used in the previous demos (e.g. [render-colorful-map.js](core/quick-started/render-colorful-map.js)). Here I just emphasize there difference. 
+
+* `FeatureSource` is a base class to help to fetch features from a specific map source data. We will create various kinds of map source by extending this base class. For example, we will use `ShapefileFeatureSource` to fetch features from `Shapefile` while`MemoryFeatureSource` is used to store temporary features in memory. There will be lots of kind of data sources in GIS region. I will introduce more later.
+* `FeatureLayer` is a major container of `FeatureSource` and `Style`. We can assume that `Layer` is utils to accommodate `FeatureSource` and `Style` for rendering your customized map surface.
+
+## Summary
+
+In this page, I introduced some basic guide for `Ginkgoch` map core library. It is the very low level component of building a map application programmatically. I'm now planning to do some advanced guide to build RESTful APIs, or cross platform GUI applications. Hope you enjoy it. 
+
+Thanks for reading, happy mapping !!!
+
+
 
 
 
