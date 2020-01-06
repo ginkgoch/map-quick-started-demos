@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DEMO MAP UI - Ginkgoch</title>
+    <link rel="stylesheet" href="deps/leaflet.css">
+    <style>
+    #mapContainer {
+        width: 800px;
+        height: 600px;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+    <div id="mapContainer"></div>
+    <script type="text/javascript" src="deps/leaflet.js"></script>
+    <script>
+        let mapView = L.map('mapContainer').setView([51.505, -0.09], 3);
+        L.tileLayer('http://localhost:3000/maps/default/{z}/{x}/{y}', {
+		attribution: 'Ginkgoch Map',
+		id: 'ginkgoch-base-map'
+	}).addTo(mapView);
+
+    </script>
+</body>
+</html>
