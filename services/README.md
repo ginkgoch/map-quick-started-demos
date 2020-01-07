@@ -4,17 +4,30 @@ In the previous page: [Quick Started Demos for Map Core](https://github.com/gink
 
 But `Ginkgoch` is far more powerful than that. I used to announce that `Ginkgoch Map` library allows to build cross platform server, desktop and mobile applications with only JavaScript. So today, I will try to challenge to build an interactive map. 
 
+- [Scenario](#scenario)
+- [Prerequisite](#prerequisite)
+- [Build XYZ Tile Service](#build-xyz-tile-service)
+    - [Create a simple service with KOA](#create-a-simple-service-with-koa)
+    - [Create the map tile router](#create-the-map-tile-router)
+    - [Service ready](#service-ready)
+    - [Build interactive map view with Leaflet](#build-interactive-map-view-with-leaflet)
+    - [Identify the countries by clicking](#identify-the-countries-by-clicking)
+        - [Identify - Client](#identify---client)
+        - [Identify - Server](#identify---server)
+        - [Identify - Complete](#identify---complete)
+- [Summary](#summary)
+
 ## Scenario
 
-I want to build an Africa map view only on browser, I have my own Shapefiles (Countries.shp, Africa.shp). I want to set my own color for those data. Besides the static map, I want to interact with the map. Click an area and identify the area I clicked and make it highlighted. See the demo at (https://github.com/ginkgoch/map-quick-started-demos)
+I want to build an Africa map view only on browser, I have my own Shapefiles (Countries.shp, Africa.shp). I want to set my own color for those data. Besides the static map, I want to interact with the map. Click an area and identify the area I clicked and make it highlighted. See the demo at (https://github.com/ginkgoch/map-quick-started-demos/tree/develop/services)
 
-Let's do it!
+This is how it looks like in the final. Let's do it!
+
+![identify](preview/preview-identify.png)
 
 ## Prerequisite
 
 Again, `Ginkgoch Map` is a low level map library which only focus on building map. At this stage, we need to require some other framework to help us to build service, desktop, mobile application easier. Fortunately, `Ginkgoch Map` is compatible with work with them. e.g. work with KOA to build RESTful or web applications, Electron to build desktop and React Native for mobile. In the near future, I will write more documents to cover them. But in this article, let's focus on map server or web more.
-
-### Add Dependencies
 
 * Koa - a lightweight web framework for node
 * Koa Router - a router engine for Koa framework
@@ -29,9 +42,9 @@ yarn add @koa/router canvas ginkgoch-map koa koa-bodyparser koa-static leaflet
 
 In the next step, I'm going to build a RESTful service with XYZ tile API.
 
-### Build XYZ Tile Service
+## Build XYZ Tile Service
 
-#### Create a simple service with KOA
+### Create a simple service with KOA
 
 To setup a basic service is the first step. It is pretty easy to create a service with following code.
 
@@ -62,7 +75,7 @@ server.listen(3000, () => {
 
 ```
 
-#### Create the map tile router
+### Create the map tile router
 
 We design the tile API as `GET: /maps/:name/:z/:x/:y`. `:name` is the name of your map state. `:z`, `:x` and `:y` mean the `zoom level`, `column` and `row` of a specific tile. 
 
@@ -114,7 +127,7 @@ router.get('/maps/:name/:z/:x/:y', async ctx => {
 module.exports = router;
 ```
 
- #### Service ready
+### Service ready
 
 Let's open a browser and type url `localhost:3000/maps/default/0/0/0`, the tile image with the world map will respond.
 
@@ -122,7 +135,7 @@ Let's open a browser and type url `localhost:3000/maps/default/0/0/0`, the tile 
 
 At this step, we know how to an API for XYZ tile. How could we build an interactive map? Let keep working on the front-end part in the next section.
 
-#### Build interactive map view with Leaflet
+### Build interactive map view with Leaflet
 
 In this section, we will work on front-end only - build interactive map view with `Leaflet` (you could choose any client map library such as `OpenLayers` as well).
 
@@ -162,11 +175,11 @@ That's all for our basic map application. I will try to make those steps as a te
 
 ![preview-basic-map.png](preview/preview-basic-map.png)
 
-#### Identify the countries by clicking
+### Identify the countries by clicking
 
 We have one last feature not implemented - `identify`. It is a pretty common operation which allows you to click on the map, find out what countries are intersected within the clicked area, and prompt a popup to show the informations.
 
-##### Identify - Client
+#### Identify - Client
 
 This time, we are working from client by clicking to send the clicked location.
 
@@ -214,7 +227,7 @@ function postBack(action, payload) {
 
 It seems a little more code, but every line is useful (we can remove some, but our code avoid to create duplicated instances which will have better performance).
 
-##### Identify - Server
+#### Identify - Server
 
 There are many ways to design the server side implementation. But due to we want to make this project as a template later, I will try to avoid to write duplicated code. So basically, we already have an `XYZ` API for fetching tile images. Then we only need one more post API to handle all the other interactions, such as this `identify` operation.
 
@@ -252,7 +265,7 @@ router.post('/maps/:name/do', async ctx => {
 });
 ```
 
-##### Identify - Complete
+#### Identify - Complete
 
 Now, let's start the server by running `node index.js` in terminal and input the URL (http://localhost:3000) in browser; click an area on the map and it will highlight; click again will popup the country name.
 
