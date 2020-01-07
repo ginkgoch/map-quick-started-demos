@@ -11,9 +11,9 @@ const {
 
 NativeFactory.registerFrom(canvasImp);
  
-module.exports = {
-    getInitMap() {
-        let layerCountries = this._getLayer(`../../data/cntry02-900913.shp`, '#f0f0f0', '#636363');
+let controller = {
+    initMap() {
+        let layerCountries = controller._getLayer(`../../data/cntry02-900913.shp`, '#f0f0f0', '#636363');
 
         // Create a engine with size 256 * 256 pixels
         let mapEngine = new MapEngine(256, 256);
@@ -56,3 +56,5 @@ module.exports = {
         return layer;
     }
 } 
+
+module.exports = controller;

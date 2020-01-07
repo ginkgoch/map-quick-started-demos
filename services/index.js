@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const static = require('koa-static');
-const mapRouter = require('./routes/map-router');
+const mapRouter = require('./routes/mapRouter');
 
 const server = new Koa();
 server.use(static('./assets'));
