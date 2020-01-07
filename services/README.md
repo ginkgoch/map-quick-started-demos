@@ -6,7 +6,7 @@ But `Ginkgoch` is far more powerful than that. I used to announce that `Ginkgoch
 
 ## Scenario
 
-I want to build an Africa map view only on browser, I have my own Shapefiles (Countries.shp, Africa.shp). I want to set my own color for those data. Besides the static map, I want to interact with the map. Click an area and identify the area I clicked and make it highlighted. See the demo at [#]()
+I want to build an Africa map view only on browser, I have my own Shapefiles (Countries.shp, Africa.shp). I want to set my own color for those data. Besides the static map, I want to interact with the map. Click an area and identify the area I clicked and make it highlighted. See the demo at (https://github.com/ginkgoch/map-quick-started-demos)
 
 Let's do it!
 
@@ -166,7 +166,103 @@ That's all for our basic map application. I will try to make those steps as a te
 
 We have one last feature not implemented - `identify`. It is a pretty common operation which allows you to click on the map, find out what countries are intersected within the clicked area, and prompt a popup to show the informations.
 
-WIP...
+##### Identify - Client
+
+This time, we are working from client by clicking to send the clicked location.
+
+```javascript
+mapView.on('click', e => {
+    let latlng = { x: e.latlng.lng, y: e.latlng.lat };
+    let zoom = mapView.getZoom();
+    
+  	// this method posts the `latlng` and `zoom` to another API 
+   	// to do the interaction with server.
+  	// check the comments below.
+    postBack('SPATIAL_IDENTIFY', { latlng, zoom });
+});
+
+function postBack(action, payload) {
+  	// here we introduce `axios` to help us for calling the APIs.
+  	// I will create an API calls `POST: /maps/:name/do` later.
+    axios.post('do', { action, payload }).then(res => {
+        let highlightLayer = undefined;
+      
+      	// find out the highlight layer whose type is `L.geoJSON`.
+        mapView.eachLayer(l => { 
+            if (l.name === highlights) {
+                highlightLayer = l;
+            }
+        });
+      
+      	// if it doesn't exist, we will create one
+        if (highlightLayer === undefined) {
+            let style = { "color": "#ff7800", "opacity": 0.65 };
+            highlightLayer = L.geoJSON([], { style }).bindPopup(layer => {
+                return layer.feature.properties['CNTRY_NAME'];
+            }).addTo(mapView);
+            highlightLayer.name = highlights;
+        }
+      
+        // clear the previous highlights if it has.
+        highlightLayer.clearLayers();
+      
+        // fill new featres into the highlight layer and redraw.
+        highlightLayer.addData(res.data.features);
+    });
+}
+```
+
+It seems a little more code, but every line is useful (we can remove some, but our code avoid to create duplicated instances which will have better performance).
+
+##### Identify - Server
+
+There are many ways to design the server side implementation. But due to we want to make this project as a template later, I will try to avoid to write duplicated code. So basically, we already have an `XYZ` API for fetching tile images. Then we only need one more post API to handle all the other interactions, such as this `identify` operation.
+
+So we will define a contract between client and server. It refers to the `redux` implementation, every post data comes with two factors: `action` and `payload`. `action` is a string to tell server what will do, `action` tells server, what will be used for the `action`. e.g. this scenario, we want to do the `identify`,  then the `action` could be `SPATIAL_IDENTIFY` which means I want to do a spatial analyze about identify (hope that makes sense). The `payload` will include where the identification location. 
+
+Recall the client code, we post with this code: `postBack('SPATIAL_IDENTIFY', { latlng, zoom });` which means the clicked latitude, longitude and current map view's zoom level.
+
+The server implementation:
+
+```javascript
+router.post('/maps/:name/do', async ctx => {
+    let { action, payload } = ctx.request.body;
+    if (action !== 'SPATIAL_IDENTIFY') {
+      	// here we only handle the identify operation
+      	// if we need to support more operations later,
+      	// recommend to change to `switch` `case` and put the concrete
+      	// operation implementation in a separate function.
+      	// I will represent a demo later.
+        throw new Error(`Not supported post action ${action}`);
+    }
+
+    let mapEngine = mapStatesCache.get(ctx.params.name);
+  	// do the concrete intersection querying
+    let features = await mapEngine.intersection(new Point(payload.latlng.x, payload.latlng.y), 'WGS84', payload.zoom, 5);
+  
+  	// due to the source data's SRS is in `EPSG:900913` 
+  	// while the `leaflet` accept the `WGS84`
+  	// we can convert the returned features to `WGS84` on the server side
+    let projection = new Projection('WGS84', mapEngine.srs.projection);
+    features = features.flatMap(f => f.features);
+    features.forEach(f => f.geometry = projection.inverse(f.geometry));
+
+    ctx.body = new FeatureCollection(features).toJSON();
+    ctx.type = 'json';
+});
+```
+
+##### Identify - Complete
+
+Now, let's start the server by running `node index.js` in terminal and input the URL (http://localhost:3000) in browser; click an area on the map and it will highlight; click again will popup the country name.
+
+![identify](preview/preview-identify.png)
+
+## Summary
+
+It is a pretty long doc, but you could understand the designing and concrete workflow to implement a GIS app. It can be much simpler, here we only uses `Ginkgoch map` basic APIs, later, we could start to use some high-level APIs to reduce the code.
+
+Happy Mapping!
 
 
 

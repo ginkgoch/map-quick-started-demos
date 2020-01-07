@@ -52,9 +52,7 @@
         }
 
         mapView.on('click', e => {
-            let latlng = e.latlng;
-            latlng = { x: latlng.lng, y: latlng.lat };
-            
+            let latlng = { x: e.latlng.lng, y: e.latlng.lat };
             let zoom = mapView.getZoom();
             
             postBack('SPATIAL_IDENTIFY', { latlng, zoom });

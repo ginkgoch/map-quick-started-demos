@@ -23,8 +23,6 @@ router.post('/maps/:name/do', async ctx => {
     const features = await mapObject.event.handle(ctx);
     ctx.body = features;
     ctx.type = 'json';
-
-    mapObject.event
 });
 
 module.exports = router;
