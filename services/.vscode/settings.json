@@ -4,6 +4,10 @@
         "Shapefile",
         "bodyparser",
         "cntry",
-        "ginkgoch"
+        "ginkgoch",
+        "informations",
+        "latlng",
+        "postbackhandler",
+        "shapefiles"
     ]
 }

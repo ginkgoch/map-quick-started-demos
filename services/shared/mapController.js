@@ -4,7 +4,9 @@ const gk = require('ginkgoch-map').default.all;
 const { 
     NativeFactory,
     ShapefileFeatureSource, FeatureLayer, 
-    FillStyle, MapEngine, Srs 
+    FillStyle, MapEngine, Srs ,
+    FeatureCollection, Point,
+    Projection
 } = gk;
 
 NativeFactory.registerFrom(canvasImp);
@@ -27,6 +29,16 @@ module.exports = {
 
     async xyz(mapEngine, z, x, y) {
         return await mapEngine.xyz(x, y, z);
+    },
+
+    async intersection(mapEngine, coordinate, zoom) {
+        let features = await mapEngine.intersection(new Point(coordinate.x, coordinate.y), 'WGS84', zoom, 5);
+        let projection = new Projection('WGS84', mapEngine.srs.projection);
+        features = features.flatMap(f => f.features);
+        features.forEach(f => {
+            f.geometry = projection.inverse(f.geometry);
+        });
+        return new FeatureCollection(features).toJSON();
     },
 
     _getLayer(filePath, fillColor, strokeColor) {
